@@ -41,21 +41,24 @@ $('#currentDay').text(today);
  * 
  * @param {*} hour
  * 
- * Utility function that checks the whether time-block is in the past, present, or future
+ * Function that checks the whether time-block is in the past, present, or future
  * and color code it accordingly
  */
-const colorCodedTextArea = (hour) => {
+const colorCodedTextArea = (hour, savedItems) => {
 
-  let currentHour = moment().hour();
+  const currentHour = moment().hour();
   let textArea = '';
+  let item = '';
+
+  savedItems ? savedItems[hour] ? item = savedItems[hour] : item : item;
 
   currentHour > hour ?
-    textArea = `<textarea id="${hour}" class="col-10 row past" rows="3"></textarea>`
+    textArea = `<textarea id="${hour}" class="col-10 row past" rows="3">${item}</textarea>`
     :
     currentHour === hour ?
-      textArea = `<textarea id="${hour}" class="col-10 row present" rows="3"></textarea>`
+      textArea = `<textarea id="${hour}" class="col-10 row present" rows="3">${item}</textarea>`
       :
-      textArea = `<textarea id="${hour}" class="col-10 row future" rows="3"></textarea>`
+      textArea = `<textarea id="${hour}" class="col-10 row future" rows="3">${item}</textarea>`
 
   return textArea;
 }
@@ -63,6 +66,8 @@ const colorCodedTextArea = (hour) => {
 /**
  * Display timeblocks
  */
+// Get local storage
+const items = JSON.parse(localStorage.getItem('items'));
 
 // Create a div with class of row
 const row = $('<div>');
@@ -78,7 +83,7 @@ for (let index = 9; index < 18; index++) {
     am += 
     `
     <div class="col-1 hour">${index}AM</div>
-    ${colorCodedTextArea(index)}
+    ${colorCodedTextArea(index, items)}
     <button class="col-1 saveBtn" data-target="${index}">Save</button>
     `
   // Create timeblock for noon
@@ -86,7 +91,7 @@ for (let index = 9; index < 18; index++) {
     noon = 
     `
     <div class="col-1 hour">12PM</div>
-    ${colorCodedTextArea(index)}
+    ${colorCodedTextArea(index, items)}
     <button class="col-1 saveBtn" data-target="${index}">Save</button>
     `
   :
@@ -94,7 +99,7 @@ for (let index = 9; index < 18; index++) {
   afternoon +=
   `
   <div class="col-1 hour">${index - 12}PM</div>
-  ${colorCodedTextArea(index - 12)}
+  ${colorCodedTextArea(index - 12, items)}
   <button class="col-1 saveBtn" data-target="${index - 12}">Save</button>
   `
 }
@@ -110,34 +115,30 @@ $('.container').append(row);
  */
 $('.saveBtn').on('click', function(event) {
   event.preventDefault();
-  item = {
-    id: '',
-    description: ''
-  }
+  console.log('clicked');
+  const id = $(this).attr('data-target');
+  const item = $('#' + id).val();
 
-  item.id = $(this).attr('data-target');
-  item.description = $('#' + item.id).val();
 
-  console.log(item);
-
-  saveToLocalStorage(item);
+  saveToLocalStorage(id, item);
 })
+
 
 /**
  * Save schedule item to local storage
  * 
  */
-const saveToLocalStorage = (item) => {
+const saveToLocalStorage = (id, item) => {
 
   // Check if local storage is already initilized
   if(localStorage.items) {
-    const items = JSON.stringify(localStorage.getItem('items'));
-    items.push(item);
-    localStorage.setItem('items', items);
+    const items = JSON.parse(localStorage.getItem('items'));
+    items[id] = item;
+    localStorage.setItem('items', JSON.stringify(items));
   } else {
-    const items = [];
-    items.push(item);
-    localStorage.setItem('items', items);
+    const items = {};
+    items[id] = item;
+    localStorage.setItem('items', JSON.stringify(items));
   }
 
 }
