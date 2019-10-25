@@ -50,12 +50,12 @@ const colorCodedTextArea = (hour) => {
   let textArea = '';
 
   currentHour > hour ?
-    textArea = `<textarea class="col-10 row past" rows="3"></textarea>`
+    textArea = `<textarea id="${hour}" class="col-10 row past" rows="3"></textarea>`
     :
     currentHour === hour ?
-      textArea = `<textarea class="col-10 row present" rows="3"></textarea>`
+      textArea = `<textarea id="${hour}" class="col-10 row present" rows="3"></textarea>`
       :
-      textArea = `<textarea class="col-10 row future" rows="3"></textarea>`
+      textArea = `<textarea id="${hour}" class="col-10 row future" rows="3"></textarea>`
 
   return textArea;
 }
@@ -79,7 +79,7 @@ for (let index = 9; index < 18; index++) {
     `
     <div class="col-1 hour">${index}AM</div>
     ${colorCodedTextArea(index)}
-    <div class  ="col-1 saveBtn">Save</div>
+    <button class="col-1 saveBtn" data-target="${index}">Save</button>
     `
   // Create timeblock for noon
   : (index === 12) ?
@@ -87,15 +87,15 @@ for (let index = 9; index < 18; index++) {
     `
     <div class="col-1 hour">12PM</div>
     ${colorCodedTextArea(index)}
-    <div class="col-1 saveBtn">Save</div>
+    <button class="col-1 saveBtn" data-target="${index}">Save</button>
     `
   :
   // Create time blocks for 12pm to 5pm
   afternoon +=
   `
   <div class="col-1 hour">${index - 12}PM</div>
-  ${colorCodedTextArea(index)}
-  <div class  ="col-1 saveBtn">Save</div>
+  ${colorCodedTextArea(index - 12)}
+  <button class="col-1 saveBtn" data-target="${index - 12}">Save</button>
   `
 }
 // Display time blocks
@@ -104,3 +104,40 @@ row.append(noon);
 row.append(afternoon);
 $('.container').append(row);
 
+/**
+ * Add event listeners to saveBtn(s) and text area item so that
+ * schedule items will be saved to localstorage
+ */
+$('.saveBtn').on('click', function(event) {
+  event.preventDefault();
+  item = {
+    id: '',
+    description: ''
+  }
+
+  item.id = $(this).attr('data-target');
+  item.description = $('#' + item.id).val();
+
+  console.log(item);
+
+  saveToLocalStorage(item);
+})
+
+/**
+ * Save schedule item to local storage
+ * 
+ */
+const saveToLocalStorage = (item) => {
+
+  // Check if local storage is already initilized
+  if(localStorage.items) {
+    const items = JSON.stringify(localStorage.getItem('items'));
+    items.push(item);
+    localStorage.setItem('items', items);
+  } else {
+    const items = [];
+    items.push(item);
+    localStorage.setItem('items', items);
+  }
+
+}
