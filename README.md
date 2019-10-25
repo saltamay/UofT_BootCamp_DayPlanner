@@ -6,14 +6,13 @@ A simple calendar application that allows the user to save events for each hour 
 1. [About the Project](#about-the-project)
 1. [User Story](#user-story)
 1. [Business Context](#business-context)
-1. [Demo](#demo)
+1. [Initial Demo](#demo)
 1. [Minimum Requirements](#minimum-requirements)
 1. [Additional Features to Consider](#additional-features-to-consider)
 1. [Getting Started](#getting-started)
 1. [Development Strategy](#development-strategy)
 1. [Tech Stack](#apis(s)-used)
-1. [Finall App](#final-app)
-1. [Getting Started](#getting-started)
+1. [App](#app)
 1. [Test](#test)
 1. [Licence](#licence)
 
@@ -45,7 +44,7 @@ So that I can manage my time effectively
 
 Poor time management can result in missed meetings and deadlines or create the appearance of unprofessionalism. A daily planner allows employees to see their day at a glance, schedule time effectively, and improve productivity.
 
-## Demo
+## Initial Demo
 
 ![day planner demo](./Assets/05-Third-Party-APIs-homework-demo.gif)
 
@@ -76,3 +75,30 @@ THEN events are saved in the timeblock for that hour
 ## Additional Features to Consider
 
 [] A to-do list to manage the important tasks on a given day
+
+## Getting Started
+
+Go to [https://saltamay.github.io/blocks/](https://saltamay.github.io/blocks/) and enjoy the app 😊
+
+## Development Strategy
+
+* Get the current date and display
+* Display timeblocks with text area for users to enter info
+* Connect moments.js to get the current time
+* Color code the timeblocks to reflect the status of the block (past, present, future)
+* Add event listeners to the timeblocks so user can update the current schedule
+
+## Tech Stack
+
+- HTML5
+- CSS3
+- Bootstrap
+- jQuery
+- JavaScript
+- [Moment.js](https://momentjs.com/)
+
+## Test
+
+## App
+
+## Licence
