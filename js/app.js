@@ -38,6 +38,29 @@ let today = `${day}, ${month} ${date}`;
 $('#currentDay').text(today);
 
 /**
+ * 
+ * @param {*} hour
+ * 
+ * Utility function that checks the whether time-block is in the past, present, or future
+ * and color code it accordingly
+ */
+const colorCodedTextArea = (hour) => {
+
+  let currentHour = moment().hour();
+  let textArea = '';
+
+  currentHour > hour ?
+    textArea = `<textarea class="col-10 row past" rows="3"></textarea>`
+    :
+    currentHour === hour ?
+      textArea = `<textarea class="col-10 row present" rows="3"></textarea>`
+      :
+      textArea = `<textarea class="col-10 row future" rows="3"></textarea>`
+
+  return textArea;
+}
+
+/**
  * Display timeblocks
  */
 
@@ -46,41 +69,38 @@ const row = $('<div>');
 row.addClass('row time-block');
 
 let am = '';
-
-// Create time blocks for 9am to 12pm
-for (let index = 9; index < 12; index++) {
-  
-  am += 
-  `
-  <div class="col-1 hour">${index} AM</div>
-  <textarea class="col-10 row" rows="3"></textarea>
-  <div class  ="col-1 saveBtn">Save</div>
-  `
-  
-}
-
-// Create timeblock for noon
-let noon = 
-`
-<div class="col-1 hour">12 PM</div>
-<textarea class="col-10 row" rows="3"></textarea>
-<div class  ="col-1 saveBtn">Save</div>
-`
-
-// Create time blocks for 12pm to 5pm
+let noon = '';
 let afternoon = '';
-for (let index = 1; index <= 5; index++) {
 
-  afternoon +=
+for (let index = 9; index < 18; index++) {
+  // Create time blocks for 9am to 12pm
+  index < 12 ?
+    am += 
     `
-  <div class="col-1 hour">${index} PM</div>
-  <textarea class="col-10 row" rows="3"></textarea>
+    <div class="col-1 hour">${index}AM</div>
+    ${colorCodedTextArea(index)}
+    <div class  ="col-1 saveBtn">Save</div>
+    `
+  // Create timeblock for noon
+  : (index === 12) ?
+    noon = 
+    `
+    <div class="col-1 hour">12PM</div>
+    ${colorCodedTextArea(index)}
+    <div class="col-1 saveBtn">Save</div>
+    `
+  :
+  // Create time blocks for 12pm to 5pm
+  afternoon +=
+  `
+  <div class="col-1 hour">${index - 12}PM</div>
+  ${colorCodedTextArea(index)}
   <div class  ="col-1 saveBtn">Save</div>
   `
-
 }
-
+// Display time blocks
 row.append(am);
 row.append(noon);
 row.append(afternoon);
 $('.container').append(row);
+
