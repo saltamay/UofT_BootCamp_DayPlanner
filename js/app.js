@@ -84,7 +84,7 @@ for (let index = 9; index < 18; index++) {
     `
     <div class="col-1 hour">${index}AM</div>
     ${colorCodedTextArea(index, items)}
-    <button class="col-1 saveBtn" data-target="${index}">Save</button>
+    <button class="col-1 saveBtn" data-target="${index}"><i class="fas fa-save"></i></button>
     `
   // Create timeblock for noon
   : (index === 12) ?
@@ -92,7 +92,7 @@ for (let index = 9; index < 18; index++) {
     `
     <div class="col-1 hour">12PM</div>
     ${colorCodedTextArea(index, items)}
-    <button class="col-1 saveBtn" data-target="${index}">Save</button>
+    <button class="col-1 saveBtn" data-target="${index}"><i class="fas fa-save"></i></button>
     `
   :
   // Create time blocks for 12pm to 5pm
@@ -100,7 +100,7 @@ for (let index = 9; index < 18; index++) {
   `
   <div class="col-1 hour">${index - 12}PM</div>
   ${colorCodedTextArea(index - 12, items)}
-  <button class="col-1 saveBtn" data-target="${index - 12}">Save</button>
+  <button class="col-1 saveBtn" data-target="${index - 12}"><i class="fas fa-save"></i></button>
   `
 }
 // Display time blocks
