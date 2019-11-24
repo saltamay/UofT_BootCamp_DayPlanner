@@ -97,8 +97,3 @@ Go to [https://saltamay.github.io/blocks/](https://saltamay.github.io/blocks/) a
 - JavaScript
 - [Moment.js](https://momentjs.com/)
 
-## Test
-
-## App
-
-## Licence
