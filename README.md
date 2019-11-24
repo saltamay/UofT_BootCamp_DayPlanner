@@ -46,7 +46,7 @@ Poor time management can result in missed meetings and deadlines or create the a
 
 ## Initial Demo
 
-![day planner demo](./Assets/05-Third-Party-APIs-homework-demo.gif)
+![day planner demo](./assets/05-Third-Party-APIs-homework-demo.gif)
 
 ## Minimum Requirements
 
