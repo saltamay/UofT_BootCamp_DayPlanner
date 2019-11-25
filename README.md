@@ -1,4 +1,6 @@
-# Moments 😊
+# UofT SCS Full-Stack Web Development Boot Camp Project #5: Day Planner
+
+# [Moments](https://saltamay.github.io/UofT_BootCamp_DayPlanner/) 😊
 A simple calendar application that allows the user to save events for each hour of the day.
 
 ## Table of Contents
